@@ -1,8 +1,8 @@
 {
-  "name": "sick-fits-backend",
+  "name": "vintage-fits-backend",
   "version": "2.0.0",
   "private": true,
-  "author": "Wes Bos",
+  "author": "Femi Sowemimo",
   "license": "MIT",
   "scripts": {
     "dev": "keystone-next",
