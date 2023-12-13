@@ -9,6 +9,7 @@ import { KeystoneConfig } from '@keystone-next/types';
 import { User } from './schemas/User';
 import { Product } from './schemas/Product';
 import { ProductImage } from './schemas/ProductImage';
+import { insertSeedData } from './seed-data';
 
 const databaseURL =
   process.env.DATABASE_URL || 'mongodb://localhost/keystone-vintage-fits';
@@ -38,6 +39,10 @@ export default withAuth(
     db: {
       adapter: 'mongoose',
       url: databaseURL,
+      async onConnect(keystone) {
+        if (process.argv.includes('--seed-data'))
+          await insertSeedData(keystone);
+      },
       // TODO: Add data seeding here
     },
     lists: createSchema({
