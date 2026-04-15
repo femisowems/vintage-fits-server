@@ -1,39 +1,33 @@
 {
-  "name": "vintage-fits-backend",
+  "name": "vintage-fits-server",
   "version": "2.0.0",
+  "description": "Vintage Fits — Keystone.js v9 GraphQL API & Admin UI backend with MongoDB, Cloudinary, Stripe, and Nodemailer",
   "private": true,
   "author": "Femi Sowemimo",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/femisowemimo/vintage.git",
+    "directory": "vintage-fits-server"
+  },
+  "keywords": [
+    "keystone",
+    "keystone-next",
+    "graphql",
+    "mongodb",
+    "e-commerce",
+    "cms",
+    "stripe",
+    "cloudinary"
+  ],
   "scripts": {
-    "postinstall": "node -e \"const fs=require('fs');const p='node_modules/extract-files/package.json';if(fs.existsSync(p)){const d=JSON.parse(fs.readFileSync(p));if(d.exports){delete d.exports;fs.writeFileSync(p,JSON.stringify(d,null,2))}}\"",
-    "dev": "NODE_OPTIONS=--openssl-legacy-provider keystone-next",
-    "seed-data": "NODE_OPTIONS=--openssl-legacy-provider keystone-next --seed-data"
-  },
-  "eslintConfig": {
-    "extends": "wesbos/typescript.js",
-    "rules": {
-      "@typescript-eslint/no-unsafe-assignment": 0
-    }
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": 10,
-            "browsers": [
-              "last 2 chrome versions",
-              "last 2 firefox versions",
-              "last 2 safari versions",
-              "last 2 edge versions"
-            ]
-          }
-        }
-      ],
-      "@babel/preset-react",
-      "@babel/preset-typescript"
-    ]
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider keystone-next dev",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider keystone-next build",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider keystone-next start",
+    "seed-data": "NODE_OPTIONS=--openssl-legacy-provider keystone-next dev --seed-data",
+    "lint": "eslint . --ext .ts,.tsx,.js",
+    "type-check": "tsc --noEmit",
+    "postinstall": "node -e \"const fs=require('fs');const p='node_modules/extract-files/package.json';if(fs.existsSync(p)){const d=JSON.parse(fs.readFileSync(p));if(d.exports){delete d.exports;fs.writeFileSync(p,JSON.stringify(d,null,2))}}\""
   },
   "dependencies": {
     "@keystone-next/admin-ui": "^8.0.1",
@@ -69,8 +63,33 @@
     "prettier": "^2.2.1",
     "typescript": "^4.1.2"
   },
+  "eslintConfig": {
+    "extends": "wesbos/typescript.js",
+    "rules": {
+      "@typescript-eslint/no-unsafe-assignment": 0
+    }
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": 14,
+            "browsers": [
+              "last 2 chrome versions",
+              "last 2 firefox versions",
+              "last 2 safari versions",
+              "last 2 edge versions"
+            ]
+          }
+        }
+      ],
+      "@babel/preset-react",
+      "@babel/preset-typescript"
+    ]
+  },
   "engines": {
     "node": ">=14.0.0"
-  },
-  "repository": "https://github.com/wesbos/advanced-react"
+  }
 }
