@@ -5,6 +5,7 @@
   "author": "Femi Sowemimo",
   "license": "MIT",
   "scripts": {
+    "postinstall": "node -e \"const fs=require('fs');const p='node_modules/extract-files/package.json';if(fs.existsSync(p)){const d=JSON.parse(fs.readFileSync(p));if(d.exports){delete d.exports;fs.writeFileSync(p,JSON.stringify(d,null,2))}}\"",
     "dev": "NODE_OPTIONS=--openssl-legacy-provider keystone-next",
     "seed-data": "NODE_OPTIONS=--openssl-legacy-provider keystone-next --seed-data"
   },

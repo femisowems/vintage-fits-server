@@ -1,5 +1,5 @@
 import { createAuth } from '@keystone-next/auth';
-import { config, createSchema } from '@keystone-next/keystone/schema';
+import { config, createSchema, graphQLSchemaExtension } from '@keystone-next/keystone/schema';
 import 'dotenv/config';
 import {
   withItemData,
@@ -9,7 +9,12 @@ import { KeystoneConfig } from '@keystone-next/types';
 import { User } from './schemas/User';
 import { Product } from './schemas/Product';
 import { ProductImage } from './schemas/ProductImage';
+import { Role } from './schemas/Role';
+import { CartItem } from './schemas/CartItem';
+import { OrderItem } from './schemas/OrderItem';
+import { Order } from './schemas/Order';
 import { insertSeedData } from './seed-data';
+import addToCart from './mutations/addToCart';
 
 const databaseURL =
   process.env.DATABASE_URL || 'mongodb://localhost/keystone-vintage-fits';
@@ -43,21 +48,44 @@ export default withAuth(
         if (process.argv.includes('--seed-data'))
           await insertSeedData(keystone);
       },
-      // TODO: Add data seeding here
     },
     lists: createSchema({
       // Schema items go in here
       User,
       Product,
       ProductImage,
+      CartItem,
+      OrderItem,
+      Order,
+      Role,
+    }),
+    extendGraphqlSchema: graphQLSchemaExtension({
+      typeDefs: `
+        type Mutation {
+          addToCart(productId: ID): CartItem
+        }
+      `,
+      resolvers: {
+        Mutation: {
+          addToCart,
+        },
+      },
     }),
     ui: {
-      // TODO: change this for roles
       isAccessAllowed: ({ session }) => !!session?.data,
     },
     session: withItemData(statelessSessions(sessionConfig), {
-      User: 'id name email',
+      User: `id name email role {
+        id 
+        name 
+        canManageProducts 
+        canSeeOtherUsers 
+        canManageUsers 
+        canManageRoles 
+        canManageCart 
+        canManageOrders
+      }`,
     }),
-    // TODO: Add session values here
+    // Session is properly configured with roles
   })
 );
