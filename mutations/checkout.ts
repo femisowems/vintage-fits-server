@@ -14,7 +14,7 @@ async function checkout(
   context: KeystoneContext
 ): Promise<any> {
   // 1. Make sure they are signed in
-  const userId = context.session.itemId;
+  const userId = context.session?.itemId;
   if (!userId) {
     throw new Error('Sorry! You must be signed in to create an order!');
   }

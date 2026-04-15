@@ -9,7 +9,7 @@ async function addToCart(
 ): Promise<CartItemCreateInput> {
   // 1. Query the current user see if they are signed in
   const sesh = context.session as Session;
-  if (!sesh.itemId) {
+  if (!sesh?.itemId) {
     throw new Error('You must be logged in to do this!');
   }
   // 2. Query the current users cart

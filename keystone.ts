@@ -14,6 +14,7 @@ import { CartItem } from './schemas/CartItem';
 import { OrderItem } from './schemas/OrderItem';
 import { Order } from './schemas/Order';
 import { insertSeedData } from './seed-data';
+import { sendPasswordResetEmail } from './lib/mail';
 import addToCart from './mutations/addToCart';
 import checkout from './mutations/checkout';
 
@@ -31,6 +32,12 @@ const { withAuth } = createAuth({
   secretField: 'password',
   initFirstItem: {
     fields: ['name', 'email', 'password'],
+  },
+  passwordReset: {
+    async sendToken(args) {
+      // console.log(args);
+      await sendPasswordResetEmail(args.token, args.identity);
+    },
   },
 });
 
