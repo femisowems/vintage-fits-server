@@ -15,6 +15,7 @@ import { OrderItem } from './schemas/OrderItem';
 import { Order } from './schemas/Order';
 import { insertSeedData } from './seed-data';
 import addToCart from './mutations/addToCart';
+import checkout from './mutations/checkout';
 
 const databaseURL =
   process.env.DATABASE_URL || 'mongodb://localhost/keystone-vintage-fits';
@@ -63,11 +64,13 @@ export default withAuth(
       typeDefs: `
         type Mutation {
           addToCart(productId: ID): CartItem
+          checkout(token: String!): Order
         }
       `,
       resolvers: {
         Mutation: {
           addToCart,
+          checkout,
         },
       },
     }),

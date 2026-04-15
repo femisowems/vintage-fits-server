@@ -29,5 +29,9 @@ export const Product = list({
       },
     }),
     price: integer(),
+    user: relationship({
+      ref: 'User.products',
+      defaultValue: ({ session }) => ({ connect: { id: session.itemId } }),
+    }),
   },
 });
